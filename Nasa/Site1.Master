@@ -1,0 +1,200 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site1.master.cs" Inherits="Nasa.Site1" %>
+
+<!DOCTYPE html>
+<html lang="en">
+<head runat="server">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><asp:ContentPlaceHolder ID="TitleContent" runat="server" /></title>
+    <asp:ContentPlaceHolder ID="HeadContent" runat="server"></asp:ContentPlaceHolder>
+    <style>
+        /* General styling */
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        /* Header styles */
+        .header {
+            background-color: #0a1f44;
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+        }
+
+        .header nav a:hover {
+            text-decoration: underline;
+        }
+
+        /* Sidebar styles */
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #0a1f44;
+            overflow-x: hidden;
+            transition: 0.3s;
+            padding-top: 60px;
+            z-index: 1000;
+        }
+
+        .sidebar img {
+            width: 150px;
+            margin: 0 auto;
+            display: block;
+            padding-bottom: 20px;
+        }
+
+        .sidebar a {
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 20px;
+            color: white;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #ff7f00;
+        }
+
+        /* Close button in the sidebar */
+        .sidebar .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+
+        /* Main content area */
+        .content-area {
+            margin-left: 0;
+            transition: margin-left 0.3s;
+            padding: 20px;
+        }
+
+        .hamburger-container {
+            display: flex;
+            align-items: center;
+        }
+
+        /* Hamburger icon */
+        .hamburger {
+            font-size: 30px;
+            cursor: pointer;
+            color: white;
+            margin-right: 10px;
+        }
+
+        /* Image next to the Hamburger icon */
+        .hamburger-img {
+            width: 45px;
+            height: 30px;
+        }
+
+        /* Footer styles */
+        footer {
+            background-color: #0a1f44;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            width: 100%;
+            position: relative;
+            bottom: 0;
+            z-index: 10;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media screen and (max-height: 450px) {
+            .sidebar { padding-top: 15px; }
+            .sidebar a { font-size: 18px; }
+        }
+    </style>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <!-- Header Section -->
+        <header class="header">
+            <!-- Hamburger icon and image -->
+            <div class="hamburger-container">
+                <span class="hamburger" onclick="openNav()">&#9776;</span>
+                <img src="Content/Logo.png" alt="Icon Image" class="hamburger-img" />
+            </div>
+            <nav>
+                <a href="Default.aspx" class="hover:underline cursor-pointer">Home</a>
+                <a href="stimulation.aspx" class="hover:underline cursor-pointer">Stimulation</a>
+                <a href="data-visualization.aspx" class="hover:underline cursor-pointer">Data Visualization Tool</a>
+                <a href="virtual-labs.aspx" class="hover:underline cursor-pointer">Virtual Labs</a>
+                <a href="explorer.aspx" class="hover:underline cursor-pointer">Explorer</a>
+                <a href="javascript:void(0)" class="hover:underline cursor-pointer" onclick="confirmLogout()">Logout</a> <!-- Logout button -->
+            </nav>
+        </header>
+
+        <!-- Sidebar Section -->
+        <div id="mySidebar" class="sidebar">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <img src="Content/profile-removebg-preview.png" alt="Sidebar Image" />
+            <a href="stimulation.aspx" class="hover:underline cursor-pointer">Stimulation</a>
+            <a href="data-visualization.aspx">Data Visualization Tool</a>
+            <a href="virtual-labs.aspx">Virtual Labs</a>
+            <a href="explorer.aspx" class="hover:underline cursor-pointer">Explorer</a>
+            <a href="javascript:void(0)" class="hover:underline cursor-pointer" onclick="confirmLogout()">Logout</a> <!-- Logout button in sidebar -->
+        </div>
+
+        <!-- Main content section -->
+        <div id="main" class="content-area">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server"></asp:ContentPlaceHolder>
+        </div>
+
+        <!-- Footer Section -->
+        <footer>
+            <div class="container mx-auto text-center">
+                <p>© 2024 NASA PACE Explorer | Powered by NASA's Earth Science Division</p>
+                <a href="https://www.nasa.gov/">Visit NASA's Official Website</a>
+            </div>
+        </footer>
+
+        <!-- JavaScript for the sidebar toggle -->
+        <script>
+            function openNav() {
+                document.getElementById("mySidebar").style.width = "250px";
+                document.getElementById("main").style.marginLeft = "250px";
+            }
+
+            function closeNav() {
+                document.getElementById("mySidebar").style.width = "0";
+                document.getElementById("main").style.marginLeft = "0";
+            }
+
+            function confirmLogout() {
+                // Create confirmation dialog
+                if (confirm("Are you sure you want to logout?")) {
+                    // If the user clicks "Yes", redirect to the login page
+                    window.location.href = "Login.aspx";
+                }
+            }
+        </script>
+    </form>
+</body>
+</html>
